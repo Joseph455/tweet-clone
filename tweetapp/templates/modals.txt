@@ -1,0 +1,62 @@
+    // create bootstrap modals to reply and retweets
+    let strReplyModal = `
+      <div class="modal fade" id="reply-modal-{id}" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body p-5 shadow">
+              <form class="reply-form" method="/tweet/reply-tweet/">
+                <textarea name="text-ontent" style="height: 10rem;" spellcheck="true" class="form-control" maxlength="200" required placeholder="Write a reply..."></textarea>
+                <input type="file" name="image">
+                <div class="d-flex flex-row mt-5 justify-content-between">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                  <input class="btn btn-success btn-reply" type="submit" value="Reply">
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+    let strRetweetModal = ``;
+    let modals = document.getElementById("modals");
+    
+    Array.from(cardBase.childNodes).forEach((icon) => {
+      if (icon.className == "icon") {
+        if (icon.attributes.state.nodeValue == "false") {
+          if (/reply/.test(icon.id)){
+            icon.setAttribute("data-toggle", "modal");
+            icon.setAttribute("data-target", `#reply-modal-${thread.id}`);
+            modals.innerHTML += strReplyModal.replace("{id}",  thread.id);
+          }
+        }
+      }
+    });
+
+    modals  = Array.from(modals.childNodes).filter(modal => {
+      if (modal.className=="modal fade"){
+        return modal;
+      }
+    });
+    
+    let replyBtns = Array.from(document.getElementsByClassName("btn-reply"));
+
+    replyBtns.forEach((btn)=>{
+      let form = btn.parentNode.parentNode;
+      btn.addEventListener("click", function(event){
+        event.preventDefault();
+        let xhr = new XMLHttpRequest();
+        xhr.open("POST",  form.attributes.method.nodeValue, true);
+        xhr.setRequestHeader("X-CSRFToken", csrf.value);
+        let form_data = new FormData();
+        form_data.append('tweetID',thread.id);
+        form_data.append('text-content', form.childNodes[1].value);
+        console.log(form.childNodes[3].files[0]);
+        form_data.append("image-content", form.childNodes[3].files[0]);
+        xhr.send(form_data);
+      });
+    });

@@ -117,6 +117,13 @@ class Profile(models.Model):
     
     def get_absolute_url(self):
         url = reverse("userapp:profile", kwargs={"profile_id": self.pk, 'username': self.user.username})
+        full_url = ""
+        protocols = ["http://", "https://"]
+        
+        for p in protocols:
+            if p in Site.objects.get_current():
+                return f"{Site.objects.get_current()}{url}"
+
         return f"http://{Site.objects.get_current()}{url}"
     
     def save(self, *args, **kwargs):

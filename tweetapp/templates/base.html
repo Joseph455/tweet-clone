@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en" style="overflow: hidden;">
+
+<head>
+  {% load static %}
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  
+  {% block title %}
+    
+    <title>Simple Sidebar - Start Bootstrap Template</title>
+ 
+  {% endblock %}
+  <!-- Bootstrap core CSS -->
+  <link href="{% static 'tweetapp/css/bootstrap.min.css' %}" rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+  <link href="{% static 'tweetapp/css/simple-sidebar.css' %}" rel="stylesheet">
+
+  <link href="{% static 'tweetapp/css/index.css' %}" rel="stylesheet">
+
+  <style>
+    
+        
+    .preview-imgage {
+      width: 100%;
+      height: 10rem;
+      border-radius: 5% !important;
+    }
+    
+    div.nav a {
+      color: inherit;
+    }
+    @media(min-width: 576px){
+      .preview-imgage {
+        width: 100%;
+        height: 13rem;
+        border-radius: 5% !important;
+      }
+    }
+
+    @media(min-width: 768px){
+      .preview-imgage {
+        width: 100%;
+        height: 15rem;
+        border-radius: 5% !important;
+      }
+    }
+
+    
+    .imageFullView {
+      width: 100%;
+      height: 100%;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: rgba(24, 23, 21, 0.623);
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+
+    div.close {
+      top:auto;
+      font-size: 3rem;
+      font-weight: 500;
+      color: white;
+      border: unset !important;
+    }
+
+    div.col-main {
+      overflow-x: hidden;
+      overflow-y: scroll;
+      height: 80vh;
+    }
+    @media(min-width: 768px){
+      div.col-main {
+        overflow-y: scroll;
+        overflow-x: hidden;
+        height: 90vh;
+      }
+    }
+
+  </style>
+  
+  {% block css %}
+
+  {% endblock %}
+
+
+</head>
+
+<body>
+
+  <div class="d-flex" id="wrapper" style="overflow-x: hidden;">
+
+    <!-- Sidebar -->
+    <div class="bg-light border-right fixed-left mb-5 d-none d-md-block" id="sidebar-wrapper">
+      <div class="sidebar-heading pb-5"></div>
+      
+
+      {% block side-nav %}
+      <!-- Visible only on medium width devices  -->
+      <div class="list-group list-group-flush nav d-none d-md-block d-lg-none" style="width: 4rem; ">
+        
+        <a href="{% url 'tweetapp:feed' %}" class="list-group-item  list-group-item-action bg-light text-center px-3 py-4">
+          <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-house" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" d="M2 13.5V7h1v6.5a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5V7h1v6.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5zm11-11V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z"/>
+            <path fill-rule="evenodd" d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z"/>
+          </svg>
+        </a>
+
+        <a href="{% url 'tweetapp:find' %}" class="list-group-item list-group-item-action  bg-light text-center  px-3 py-4">
+          <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-search" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z"/>
+            <path fill-rule="evenodd" d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"/>
+          </svg>
+        </a>
+        <a href="#" class="list-group-item list-group-item-action bg-light text-center  px-3 py-4">
+          <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-bell" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2z"/>
+            <path fill-rule="evenodd" d="M8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6z"/>
+          </svg>
+        </a>
+        <a href="{% url 'tweetapp:messages' %}" class="list-group-item list-group-item-action bg-light text-center px-3 py-4 ">
+          <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-envelope" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2zm13 2.383l-4.758 2.855L15 11.114v-5.73zm-.034 6.878L9.271 8.82 8 9.583 6.728 8.82l-5.694 3.44A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.739zM1 11.114l4.758-2.876L1 5.383v5.73z"/>
+          </svg>
+        </a>
+        <a href="{{user.profile.get_absolute_url}}" class="list-group-item list-group-item-action bg-light text-center px-3 py-4 ">
+          <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-person" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" d="M10 5a2 2 0 1 1-4 0 2 2 0 0 1 4 0zM8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm6 5c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
+          </svg>
+        </a>
+      </div>
+
+      <!-- Visible on devices all width larger than medium -->
+      <div class="list-group list-group-flush d-none d-lg-block text-center lead" >
+        <a href="{% url 'tweetapp:feed' %}" class="list-group-item list-group-item-action bg-light  d-flex flex-row justify-content-around align-items-center">
+          <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-house col-4" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" d="M2 13.5V7h1v6.5a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5V7h1v6.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5zm11-11V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z"/>
+            <path fill-rule="evenodd" d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z"/>
+          </svg>
+          <span class="col-6 text-left">Home</span>
+        </a>
+        <a href="{% url 'tweetapp:find' %}" class="list-group-item list-group-item-action bg-light  d-flex flex-row justify-content-around align-items-center">
+          <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-search col-4" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z"/>
+            <path fill-rule="evenodd" d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"/>
+          </svg>
+          <span class="col-6 text-left">Find</span>
+        </a>
+        <a href="#" class="list-group-item list-group-item-action bg-light  d-flex flex-row justify-content-around align-items-center">
+          <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-bell col-4" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2z"/>
+            <path fill-rule="evenodd" d="M8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6z"/>
+          </svg>
+          <span class="col-6 text-left">Notification</span>
+        </a>
+        <a href="{% url 'tweetapp:messages' %}" class="list-group-item list-group-item-action bg-light  d-flex flex-row justify-content-around align-items-center">
+          <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-envelope col-4" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2zm13 2.383l-4.758 2.855L15 11.114v-5.73zm-.034 6.878L9.271 8.82 8 9.583 6.728 8.82l-5.694 3.44A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.739zM1 11.114l4.758-2.876L1 5.383v5.73z"/>
+          </svg>          
+          <span class="col-6 text-left">Message</span>
+        </a>
+        <a href="{{user.profile.get_absolute_url}}" class="list-group-item list-group-item-action bg-light  d-flex flex-row justify-content-around align-items-center">
+          <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-person col-4" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" d="M10 5a2 2 0 1 1-4 0 2 2 0 0 1 4 0zM8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm6 5c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
+          </svg>
+          <span class="col-6 text-left">Profile</span>
+        </a>
+      </div>
+      {% endblock side-nav %}
+    </div>
+
+
+    <!-- /#sidebar-wrapper -->
+
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+      <nav  class="navbar navbar-expand-lg navbar-light bg-light fixed-top mb-5 border-bottom">
+        <span class="d-flex flex-row align-items-center" id="menu-toggle">
+          <!-- Change to request.user.profile.image -->
+          <img src="{{ user.profile.image.url|default:'/media/userapp/profile-pictures/default.png' }}" class="rounded-circle" alt="..." style="width:3rem;height:3rem;">
+          <h3 class="mx-4">{% block title-top %} Home {% endblock %} </h3>
+        </span>
+
+        <span class="text-primary rounded-circle border border-primary d-block d-md-none">
+          <a href="{{user.profile.get_absolute_url}}">
+            <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-person" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" d="M10 5a2 2 0 1 1-4 0 2 2 0 0 1 4 0zM8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm6 5c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
+            </svg>
+          </a>
+        </span>
+      </nav>
+      
+
+      
+        <div class="container-fluid">
+          
+          
+          {% block body %}
+            <h1 class="mt-4">Simple Sidebar</h1>
+            <p>The starting state of the menu will appear collapsed on smaller screens, and will appear non-collapsed on larger screens. When toggled using the button below, the menu will change.</p>
+            <p>Make sure to keep all page content within the <code>#page-content-wrapper</code>. The top navbar is optional, and just for demonstration. Just create an element with the <code>#menu-toggle</code> ID which will toggle the menu when clicked.</p>
+          {% endblock body %}
+          
+          
+          {% block bottom-nav %}
+          <!-- Visible only on small devices  -->
+            <div class="bg-light fixed-bottom border-top py-3 pr-5 pl-5 d-none d-block d-md-none">
+              <div class="d-flex flex-row mt-auto justify-content-between nav align-items-center px-md-5 ">
+                <a href="{% url 'tweetapp:feed' %}" class="">
+                  <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-house" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M2 13.5V7h1v6.5a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5V7h1v6.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5zm11-11V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z"/>
+                    <path fill-rule="evenodd" d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z"/>
+                  </svg>
+                </a>
+                <a href="{% url 'tweetapp:find' %}">
+                  <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-search" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z"/>
+                    <path fill-rule="evenodd" d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"/>
+                  </svg>
+                </a>
+                <a class="">
+                  <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-bell" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2z"/>
+                    <path fill-rule="evenodd" d="M8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6z"/>
+                  </svg>
+                </a>
+                <a class="" href="{% url 'tweetapp:messages' %}">
+                  <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-envelope" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2zm13 2.383l-4.758 2.855L15 11.114v-5.73zm-.034 6.878L9.271 8.82 8 9.583 6.728 8.82l-5.694 3.44A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.739zM1 11.114l4.758-2.876L1 5.383v5.73z"/>
+                  </svg>
+                </a>
+              </div>
+            </div>
+          {% endblock bottom-nav %}
+        
+        
+        </div>
+    </div>
+    <!-- /#page-content-wrapper -->
+
+  </div>
+  <!-- /#wrapper -->
+  {% block javascript %}
+  
+
+  {% endblock %}
+  <!-- Bootstrap core JavaScript -->
+  <script src="{% static 'tweetapp/js/jquery.min.js' %}"></script>
+  <script src="{% static 'tweetapp/js/bootstrap.bundle.min.js' %}"></script>
+
+  <!-- Menu Toggle Script -->
+  <script>
+    $("#menu-toggle").click(function(e) {
+      e.preventDefault();
+      $("#wrapper").toggleClass("toggled");
+    });
+  </script>
+
+</body>
+
+</html>

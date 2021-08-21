@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en" style="overflow: hidden;">
+
+  <head>
+    {% load static %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    
+    {% block title %}
+      
+      <title>Simple Sidebar - Start Bootstrap Template</title>
+  
+    {% endblock %}
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'tweetapp/css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="{% static 'tweetapp/css/simple-sidebar.css' %}" rel="stylesheet">
+
+    <link href="{% static 'tweetapp/css/index.css' %}" rel="stylesheet">
+    
+    {% block css %}
+
+    <style>
+        #page-container {
+            background-color: rgba(29, 161, 242, 100);
+            width: 100vw;
+            height: 100vh;
+            /* opacity: 0.1; */
+          }
+
+        @media(min-width: 600px){
+        #page-container {
+          background-color: rgba(29, 161, 242, 100);
+          width: 80vh;
+          height: 80vh;
+          position: fixed;
+          border-radius: 5%;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+        }
+      }
+      #form-container {
+          width: 90%;
+          height: 90%;
+          position: fixed;
+          border-radius: 5%;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+        }
+      .link:hover {
+        text-decoration-line: underline;
+        cursor:pointer;
+      }
+      </style>
+
+    {% endblock %}
+
+
+  </head>
+
+  <body>
+    <div id="page-container" class="centered p-5">
+      <div id="form-container" class="card-body text-center centered bg-light p-5">
+        <img class="shadow-sm" scr="" width="30" height="30">
+        <h2 id="top-text" class="text-center my-3">Please sign in</h2>
+        <div id="message" class="p-0 m-0"> </div>
+        <form id="form" action="{% url 'userapp:login' %}" class="needs-validation text-left" novalidate>
+          <div class="text-left my-3 my-md-1 my-lg-2">
+            <input type="email" class="form-control" id="id_email" aria-describedby="inputGroupPrepend" placeholder="Email address" autocomplete="email" required>
+            <div class="invalid-feedback">
+              Please enter a valid email address.
+            </div>
+            <div class="valid-feedback">
+              &checkmark; Good to go
+            </div>
+          </div>
+          <div class="text-left my-3 my-md-1 my-lg-2">
+            <input type="password"  class="form-control" id="id_password" placeholder="Password" autocomplete="current-password" required>
+            <div class="invalid-feedback">
+              Please enter a password.
+            </div>
+            <div class="valid-feedback">
+              &checkmark; Good to go
+            </div>
+          </div>
+          <button class="btn btn-primary w-100" type="submit">Sign In</button>
+          <div class="text-left my-3 d-flex flex-column">
+            <small id="page-3" class="text-primary p-1 link">Forgot your password ?...</small>
+            <small id="page-2" class="text-primary p-1 link">Don't yet have an account ? sign up</small>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Django block -->
+    {% csrf_token %}
+    <input id="id_login_url" value="{% url 'userapp:login' %}" hidden/>
+    <input id="id_registration_url" value="{% url 'userapp:register' %}" hidden/>
+    <input id="id_forgot-password_url" value="{% url 'userapp:forgot-password' %}" hidden/>
+
+
+  
+    
+    <script src="{% static 'tweetapp/js/jquery.min.js' %}"></script>
+    <script src="{% static 'tweetapp/js/bootstrap.bundle.min.js' %}"></script>
+  
+    <script src="{% static 'userapp/js/login.js' %}" ></script>
+    <script>
+      document.getElementById("page-3").addEventListener("click", function(){forgotPasswordForm("{% url 'userapp:forgot-password' %}")});
+      document.getElementById("page-2").addEventListener("click", function(){signUpForm("{% url 'userapp:register' %}")});
+    </script>
+    <script>
+      // Example starter JavaScript for disabling form submissions if there are invalid fields
+      (function() {
+        'use strict';
+        window.addEventListener('load', function() {
+          // Fetch all the forms we want to apply custom Bootstrap validation styles to
+          var forms = document.getElementsByClassName('needs-validation');
+          // Loop over them and prevent submission
+          var validation = Array.prototype.filter.call(forms, function(form) {
+            form.addEventListener('submit', function(event) {
+              if (form.checkValidity() === false) {
+                event.preventDefault();
+                event.stopPropagation();
+              } else {
+                event.preventDefault();
+                event.stopPropagation();
+                submitFormAjax(form.action, getFormData())
+              }
+              form.classList.add('was-validated');
+            }, false);
+          });
+        }, false);
+      })();
+
+    </script>
+  </body>
+</html>

@@ -1,0 +1,571 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+
+
+{% block title %}
+
+  <title> Twitterapp | Profile</title>
+
+{% endblock %}
+
+{% block css %}
+  <style>
+    #cover {
+      height: 10rem;
+      background-image:url("{% static 'userapp/svg/cam.svg' %}");
+      background-image: url("{{profile.cover.url}}");
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+
+    .cover {
+      height: 7rem;
+      background-image: url("{{profile.cover.url}}");
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+
+    #profile-pic {
+      width: 8rem;
+      height: 8rem;
+      border-radius: 50%;
+      border-width: 0.2rem !important;
+      border-color: white !important;
+      top: 5rem;
+      position: relative;
+      background-color: white;
+      background-image: url("{{profile.image.url}}");
+      background-size:cover;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+    
+    .profile-pic {
+      width: 6.5rem;
+      height: 6.5rem;
+      border-radius: 50%;
+      border-width: 0.2rem !important;
+      border-color: white !important;
+      top: 4rem;
+      position: relative;
+      background-color: white;
+      background-image: url("{{profile.image.url}}");
+      background-size:cover;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+
+    .nav-btn {
+      border-bottom-width: 0rem !important;
+      font-size: large;
+      color:#6c757d;
+      font-weight: 600;
+    }
+    .nav-btn:active {
+      background-color: #f8f9fa;
+      color: #007bff;
+    }
+    .nav-btn.active {
+      background-color: #f8f9fa;
+      border-bottom-color: #007bff !important;
+      border-bottom-width: 0.2rem !important;
+      color: #007bff;
+    }
+
+    .fz-md {
+      font-size: 1.3rem;
+    }  
+  </style>
+{% endblock %}
+
+
+
+
+
+{% block side-nav %}
+<!-- Visible only on medium width devices  -->
+<div class="list-group list-group-flush nav d-none d-md-block d-lg-none" style="width: 4rem; ">
+  
+  <a href="{% url 'tweetapp:feed' %}" class="list-group-item list-group-item-action bg-light text-center px-3 py-4">
+    <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-house" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+      <path fill-rule="evenodd" d="M2 13.5V7h1v6.5a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5V7h1v6.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5zm11-11V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z"/>
+      <path fill-rule="evenodd" d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z"/>
+    </svg>
+  </a>
+
+  <a href="{% url 'tweetapp:find' %}" class="list-group-item list-group-item-action  bg-light text-center  px-3 py-4">
+    <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-search" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+      <path fill-rule="evenodd" d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z"/>
+      <path fill-rule="evenodd" d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"/>
+    </svg>
+  </a>
+  <a href="#" class="list-group-item list-group-item-action bg-light text-center  px-3 py-4">
+    <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-bell" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+      <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2z"/>
+      <path fill-rule="evenodd" d="M8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6z"/>
+    </svg>
+  </a>
+  <a href="{% url 'tweetapp:messages' %}" class="list-group-item list-group-item-action bg-light text-center px-3 py-4 ">
+    <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-envelope" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+      <path fill-rule="evenodd" d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2zm13 2.383l-4.758 2.855L15 11.114v-5.73zm-.034 6.878L9.271 8.82 8 9.583 6.728 8.82l-5.694 3.44A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.739zM1 11.114l4.758-2.876L1 5.383v5.73z"/>
+    </svg>
+  </a>
+  <a href="{{user.profile.get_absolute_url}}" class="list-group-item list-group-item-action text-primary bg-light text-center px-3 py-4 ">
+    <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-person" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+      <path fill-rule="evenodd" d="M10 5a2 2 0 1 1-4 0 2 2 0 0 1 4 0zM8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm6 5c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
+    </svg>
+  </a>
+</div>
+
+<!-- Visible on devices all width larger than medium -->
+<div class="list-group list-group-flush d-none d-lg-block text-center lead" >
+  <a href="{% url 'tweetapp:feed' %}" class="list-group-item list-group-item-action bg-light d-flex flex-row justify-content-around align-items-center">
+    <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-house col-4" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+      <path fill-rule="evenodd" d="M2 13.5V7h1v6.5a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5V7h1v6.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5zm11-11V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z"/>
+      <path fill-rule="evenodd" d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z"/>
+    </svg>
+    <span class="col-6 text-left">Home</span>
+  </a>
+  <a href="{% url 'tweetapp:find' %}" class="list-group-item list-group-item-action bg-light  d-flex flex-row justify-content-around align-items-center">
+    <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-search col-4" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+      <path fill-rule="evenodd" d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z"/>
+      <path fill-rule="evenodd" d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"/>
+    </svg>
+    <span class="col-6 text-left">Find</span>
+  </a>
+  <a href="#" class="list-group-item list-group-item-action bg-light  d-flex flex-row justify-content-around align-items-center">
+    <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-bell col-4" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+      <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2z"/>
+      <path fill-rule="evenodd" d="M8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6z"/>
+    </svg>
+    <span class="col-6 text-left">Notification</span>
+  </a>
+  <a href="{% url 'tweetapp:messages' %}" class="list-group-item list-group-item-action bg-light d-flex flex-row justify-content-around align-items-center">
+    <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-envelope col-4" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+      <path fill-rule="evenodd" d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2zm13 2.383l-4.758 2.855L15 11.114v-5.73zm-.034 6.878L9.271 8.82 8 9.583 6.728 8.82l-5.694 3.44A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.739zM1 11.114l4.758-2.876L1 5.383v5.73z"/>
+    </svg>          
+    <span class="col-6 text-left">Message</span>
+  </a>
+  <a href="{{user.profile.get_absolute_url}}" class="list-group-item list-group-item-action bg-light text-primary d-flex flex-row justify-content-around align-items-center">
+    <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-person col-4" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+      <path fill-rule="evenodd" d="M10 5a2 2 0 1 1-4 0 2 2 0 0 1 4 0zM8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm6 5c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
+    </svg>
+    <span class="col-6 text-left">Profile</span>
+  </a>
+</div>
+{% endblock side-nav %}
+
+
+{% block bottom-nav %}
+<!-- Visible only on small devices  -->
+  <div class="bg-light fixed-bottom border-top py-3 pr-5 pl-5 d-none d-block d-md-none">
+    <div class="d-flex flex-row mt-auto justify-content-between nav align-items-center px-md-5 ">
+      <a href="{% url 'tweetapp:feed' %}" class="">
+        <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-house" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd" d="M2 13.5V7h1v6.5a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5V7h1v6.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5zm11-11V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z"/>
+          <path fill-rule="evenodd" d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z"/>
+        </svg>
+      </a>
+      <a class="" href="{% url 'tweetapp:find' %}">
+        <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-search" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd" d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z"/>
+          <path fill-rule="evenodd" d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"/>
+        </svg>
+      </a>
+      <a class="">
+        <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-bell" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+          <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2z"/>
+          <path fill-rule="evenodd" d="M8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6z"/>
+        </svg>
+      </a>
+      <a href="{% url 'tweetapp:messages' %}">
+        <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-envelope" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd" d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2zm13 2.383l-4.758 2.855L15 11.114v-5.73zm-.034 6.878L9.271 8.82 8 9.583 6.728 8.82l-5.694 3.44A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.739zM1 11.114l4.758-2.876L1 5.383v5.73z"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+{% endblock bottom-nav %}
+
+
+
+
+{% block body %}
+
+<div class="row p-2 p-md-3">
+  <div id="container" class="col-lg-7 col-main my-5 mb-md-5 p-0" active="tweet" >
+    <div id="cover" class="mt-2">
+      <div id="profile-pic" class="ml-3 border">
+
+      </div>
+    </div>
+    <div class="d-flex flex-row-reverse align-items-end p-2 mr-2">
+      {% if profile != user.profile %}
+        <button class="btn btn-lg badge-pill border border-primary btn-light text-primary" onclick="followEventHandler(event, {{profile.id}})">
+          {% if profile in user.profile.following.all %} Following {% else %} Follow {% endif %}
+        </button>
+        <span class="mx-2 p-2 rounded-circle border border-primary btn-light text-primary">
+          <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-envelope" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2zm13 2.383l-4.758 2.855L15 11.114v-5.73zm-.034 6.878L9.271 8.82 8 9.583 6.728 8.82l-5.694 3.44A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.739zM1 11.114l4.758-2.876L1 5.383v5.73z"/>
+          </svg>
+        </span>
+      {% elif profile == user.profile %}
+        <a href="{% url 'userapp:logout' %}" class="my-auto ml-1"><button class="btn  btn-sm btn-lg badge-pill border border-danger btn-light text-danger">
+          Log Out
+        </button></a>
+        <button class="btn btn-lg badge-pill border border-primary btn-light text-primary" onclick="$('#edit-profile-modal').modal('show')">
+          Edit profile
+        </button>
+      {% endif %}
+    </div>
+    <div class="mt-2 mx-3">
+      <h3 class="text-capitalize m-0">{{profile.user.first_name}} {{profile.user.last_name}}</h3>
+      <h5 class="text-muted">{{profile.get_username}}</h5>
+      {% if profile.bio %}
+        <p class="mt-2">{{profile.bio}}</p>
+      {% endif %}
+      <div class="d-flex flex-row mt-auto   text-muted mt-2">
+        {% if profile.location %}
+          <span class="mr-3">
+            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-geo-alt" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" d="M12.166 8.94C12.696 7.867 13 6.862 13 6A5 5 0 0 0 3 6c0 .862.305 1.867.834 2.94.524 1.062 1.234 2.12 1.96 3.07A31.481 31.481 0 0 0 8 14.58l.208-.22a31.493 31.493 0 0 0 1.998-2.35c.726-.95 1.436-2.008 1.96-3.07zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z"/>
+              <path fill-rule="evenodd" d="M8 8a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+            </svg>
+            {{profile.location}} 
+          </span>
+        {% endif %}
+        {% if profile.website %}
+          <span class="mr-3">
+            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-link" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path d="M6.354 5.5H4a3 3 0 0 0 0 6h3a3 3 0 0 0 2.83-4H9c-.086 0-.17.01-.25.031A2 2 0 0 1 7 10.5H4a2 2 0 1 1 0-4h1.535c.218-.376.495-.714.82-1z"/>
+              <path d="M9 5.5a3 3 0 0 0-2.83 4h1.098A2 2 0 0 1 9 6.5h3a2 2 0 1 1 0 4h-1.535a4.02 4.02 0 0 1-.82 1H12a3 3 0 1 0 0-6H9z"/>
+            </svg>
+            <a href="{{profile.website}}" >{{profile.website|truncatechars:15}}</a> 
+          </span>
+        {% endif %}
+        <span class="mr-3">
+          <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-calendar3" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" d="M14 0H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM1 3.857C1 3.384 1.448 3 2 3h12c.552 0 1 .384 1 .857v10.286c0 .473-.448.857-1 .857H2c-.552 0-1-.384-1-.857V3.857z"/>
+            <path fill-rule="evenodd" d="M6.5 7a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
+          </svg>
+          Joined {{profile.user.date_joined|date:"F Y"}}
+        </span>
+      </div>
+    <div class="font-weight-bold mt-2" onclick="showFollowModal(`{% url  'userapp:get-followers' profile_id=profile.id username=profile.user.username loadState=0 %}`)">
+        <span class="mr-3">{{profile.following.count}} <span class="text-muted">Following</span></span>
+        <span>{{profile.followers.count}} <span class="text-muted">Follower{{profile.followers.count|pluralize}}</span></span>
+      </div>
+    </div>
+
+    <div class="d-flex flex-row justify-content-between  mt-4 text-center">
+      <span id="id_tweet-nav" class="p-3 w-25 border-bottom nav-btn active">Tweets</span>
+      <span id="id_reply-nav" class="p-3 w-25 border-bottom nav-btn">Replies</span>
+      <span id="id_like-nav" class="p-3 w-25 border-bottom nav-btn">Likes</span>
+      <span id="id_media-nav" class="p-3 w-25 border-bottom nav-btn">Media</span>
+    </div>
+
+    <div id="threads">
+
+    </div>
+
+  </div>
+  
+  <div class="col-lg-5 my-5 p-1 bg-light" style="overflow-y: scroll;">
+  
+  </div>
+
+
+  <!-- Django => JS values -->
+  <div>
+    {% csrf_token %}
+    <input id="id_profile-id" value="{{ profile.id }}" hidden />
+    <input id="id_profile-username" value="{{profile.user.username}}" hidden />
+    <input id="id_liketweet_url" value="{% url 'tweetapp:like-tweet' %}" hidden />
+    <input id="id_reply_url" value="{% url 'tweetapp:reply-tweet' %}" hidden />
+    <input id="id_retweet_url" value="{% url 'tweetapp:retweet-tweet' %}" hidden />
+    <input id="id_like-reply_url" value="{% url 'tweetapp:like-reply' %}" hidden />
+    <input id="id_reply-reply_url" value="{% url 'tweetapp:reply-reply' %}" hidden />
+    <input id="id_follow-profile-url" value="{% url 'userapp:follow-profile' profile_id=profile.id username=profile.user.username %}" hidden />
+    <input id="id_edit-profile-url" value="{% url 'userapp:edit-profile' %}" hidden/>
+    <input id="id_logged-profile-username" value="{{user.profile.get_username}}" hidden/>
+  </div>
+
+  <!-- Follower detail modal  -->
+  <div class="modal fade" id="follow-modal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+      <div class="modal-content" style="height: 100vh;">
+        <div class="px-3 py-2  border-bottom">
+          <span class="d-flex">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"  onclick="window.location.reload()">
+              <svg width="1.5em" height="1.75em" viewBox="0 0 16 16" aria-hidden="true" class="bi bi-arrow-left text-primary" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+              </svg>      
+            </button>
+            <span class="mx-3">
+              <h4 class="m-0">{{profile.user.first_name}} {{profile.user.last_name}}</h4>
+              <h5 class="text-muted">{{profile.get_username}}</h5>
+            </span>
+          </span>
+        </div>
+        <div class="modal-body p-0">
+          <div class="d-flex flex-row justify-content-between text-center">
+            <span id="id_followers-nav" class="p-3 w-50 border-bottom nav-btn active">Followers <span class="badge badge-primary text-light">{{profile.followers.count}}</span></span>
+            <span id="id_following-nav" class="p-3 w-50 border-bottom nav-btn">Following <span class="badge badge-primary text-light">{{profile.following.count}}</span></span>
+          </div>
+          <div id="profile-container" style="height: 65vh;max-height: 65vh;;overflow-y: scroll;">
+
+          </div>
+          <script>
+          </script>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- EDIT PROFILE MODAL -->
+  <div class="modal fade" id="edit-profile-modal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+      <div class="modal-content bg-light" >
+        <div class="px-3 py-2 d-flex flex-row justify-content-between  border-bottom">
+          <span class="row">
+            <button type="button" class="close mx-2" data-dismiss="modal" aria-label="Close" onclick="window.location.reload()">
+              <svg width="1.5em" height="1.75em" viewBox="0 0 16 16" aria-hidden="true" class="bi bi-arrow-left text-primary" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+              </svg>
+            </button>
+            <h4 class="mx-3 my-2 font-weight-bolder">
+              Edit profile
+            </h4>
+          </span>
+          <span>
+            <button type="submit" form="editProfileForm" class="btn btn-primary badge-pill font-weight-bold text-white">Save</button>
+          </span>
+        </div>
+        <div class="modal-body">
+          <form id="editProfileForm" class="needs-validation text-left" novalidate>
+            <div class="mb-5">
+              <label for="id_profile-form-cover" class="w-100 cover">
+                <label for="id_profile-form-img" class="ml-3 border d-flex justify-content-center profile-pic">
+                  <span class="align-self-center text-muted" style="font-weight: 700; font-size: 1rem;"> Change</span>
+                </label>
+              </label>
+              <input id="id_profile-form-cover" type="file" accept="image/*" onchange="loadImageToLabel(event)"  hidden />
+              <input id="id_profile-form-img" type="file" accept="image/*" onchange="loadImageToLabel(event)" hidden />
+            </div>
+            <div class="text-left">
+              <textarea class="form-control fz-md" id="id_profile-form-name" aria-describedby="inputGroupPrepend" placeholder="First name | Last name">{{user.first_name}} {{user.last_name}}</textarea>
+              <label class="font-weight-bold text-muted" for="id_profile-form-name">First name &  Last name</label>
+            </div>
+            <div class="text-left my-3">
+              <textarea  class="form-control fz-md" id="id_profile-form-bio" placeholder="Biography">{{profile.bio}}</textarea>
+              <label class="font-weight-bold text-muted" for="id_profile-form-bio">Biography </label>
+            </div>
+            <div class="text-left my-3">
+              <textarea class="form-control fz-md" id="id_profile-form-location" placeholder="Location" maxlength="100" >{{profile.location}}</textarea>
+              <label class="font-weight-bold text-muted" for="id_profile-form-location">Location</label>
+            </div>
+            <div class="text-left my-3">
+              <input type="url"  class="form-control" id="id_profile-form-website" placeholder="Website" maxlength="50" />
+              <div class="invalid-feedback">
+                Please enter a valid URL. e.g http://twitterclone.com
+              </div>
+              <label class="font-weight-bold text-muted" for="id_profile-form-website">Website</label>  
+            </div>
+            <div class="text-left my-3">
+              <input type="date" class="form-control" id="id_profile-form-birth-date" />
+              <label class="font-weight-bold text-muted" for="id_profile-form-birth-date">Date of birth</label>
+            </div>
+          </form> 
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="ImageModals">
+
+  </div>
+  <div id="image-modal">
+
+  </div>
+  
+  <div id="ReplyModals">
+    
+  </div>
+  
+  <div id="RetweetModals">
+    
+  </div>
+
+  <div id="profile-pic-full-view" class="modal fade" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="img">
+      <div class="modal-content bg-light" >
+        <div class="imageFullView" style="background-image: url('{{profile.image.url}}');">
+          <div class="close border text-center" data-dismiss="modal" aria-label="Close">
+            &times;
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="profile-cover-full-view" class="modal fade" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="img">
+      <div class="modal-content">
+        <div class="imageFullView" style="background-image: url('{{profile.cover.url}}');">
+          <div class="close border text-center" data-dismiss="modal" aria-label="Close">
+            &times;
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  
+
+{% endblock %}
+
+
+
+{% block javascript %}
+<script src="{% static 'userapp/js/thread.js' %}"></script>
+<script src="{% static 'userapp/js/tweet.js' %}"></script>
+<script src="{% static 'userapp/js/profile.js' %}"></script>
+<script>
+  // Example starter JavaScript for disabling form submissions if there are invalid fields
+  (function() {
+    'use strict';
+    window.addEventListener('load', function() {
+      // Fetch all the forms we want to apply custom Bootstrap validation styles to
+      var forms = document.getElementsByClassName('needs-validation');
+      // Loop over them and prevent submission
+      var validation = Array.prototype.filter.call(forms, function(form) {
+        form.addEventListener('submit', function(event) {
+          if (form.checkValidity() === false) {
+            event.preventDefault();
+            event.stopPropagation();
+          } else {
+            event.preventDefault();
+            event.stopPropagation();
+            saveProfile()          
+          }
+          form.classList.add('was-validated');
+        }, false);
+      });
+    }, false);
+  })();
+</script>
+
+<script>
+  window.onload =  function(){
+    loadState = 0;
+    maxState = 1;
+    getting = false;
+    loadTweets("{% url 'userapp:get-tweets' profile_id=profile.id username=profile.user.username loadState=0 %}");
+  }
+
+
+  document.getElementById("container").addEventListener("scroll", function() {
+    const scrollable =  document.getElementById("container").scrollHeight - document.getElementById("container").parentElement.scrollHeight;
+    const scrolled  = document.getElementById("container").scrollTop;
+    if (Math.ceil(scrolled) >= scrollable) {
+      let active = document.getElementById("container").attributes.active.nodeValue;
+      if (active == "tweet"){
+        loadTweets("{% url 'userapp:get-tweets' profile_id=profile.id username=profile.user.username loadState=0 %}")
+      } else if (active == "reply") {
+        loadReplies("{% url 'userapp:get-replies' profile_id=profile.id username=profile.user.username loadState=0 %}");
+      } else if (active == "like"){
+        loadLikes("{% url 'userapp:get-likes' profile_id=profile.id username=profile.user.username loadState=0 %}");
+      } else {
+        loadMedias("{% url 'userapp:get-medias' profile_id=profile.id username=profile.user.username loadState=0 %}");
+      }
+    }
+  });
+
+
+  document.getElementById("id_tweet-nav").addEventListener("click", function(){
+    Array.from(document.getElementsByClassName("nav-btn")).forEach(btn =>{
+      btn.classList.remove("active")
+    })
+    loadState = 0;
+    maxState = 1;
+    document.getElementById("threads").innerHTML = "";
+    document.getElementById("container").attributes.active.nodeValue = "tweet"; 
+    this.classList.add("active");
+    loadTweets("{% url 'userapp:get-tweets' profile_id=profile.id username=profile.user.username loadState=0 %}");
+  });
+
+
+  document.getElementById("id_reply-nav").addEventListener("click", function(){
+    Array.from(document.getElementsByClassName("nav-btn")).forEach(btn =>{
+      btn.classList.remove("active")
+    })
+    loadState = 0;
+    maxState = 1;
+    document.getElementById("threads").innerHTML = "";
+    document.getElementById("container").attributes.active.nodeValue = "reply"; 
+    this.classList.add("active");
+    loadReplies("{% url 'userapp:get-replies' profile_id=profile.id username=profile.user.username loadState=0 %}");
+  });
+
+
+  document.getElementById("id_like-nav").addEventListener("click", function(){
+    Array.from(document.getElementsByClassName("nav-btn")).forEach(btn =>{
+      btn.classList.remove("active")
+    })
+    loadState = 0;
+    maxState = 1;
+    document.getElementById("threads").innerHTML = "";
+    document.getElementById("container").attributes.active.nodeValue = "like"; 
+    this.classList.add("active");
+    loadLikes("{% url 'userapp:get-likes' profile_id=profile.id username=profile.user.username loadState=0 %}");
+  });
+
+
+  document.getElementById("id_media-nav").addEventListener("click", function(){
+    Array.from(document.getElementsByClassName("nav-btn")).forEach(btn =>{
+      btn.classList.remove("active")
+    })
+    loadState = 0;
+    maxState = 1;
+    document.getElementById("threads").innerHTML = "";
+    document.getElementById("container").attributes.active.nodeValue = "media"; 
+    this.classList.add("active");
+    loadMedias("{% url 'userapp:get-medias' profile_id=profile.id username=profile.user.username loadState=0 %}");
+  });
+
+  document.getElementById("id_followers-nav").addEventListener("click", function(event){
+    this.classList.add("active");
+    document.getElementById("id_following-nav").classList.remove("active");
+    document.getElementById("profile-container").innerHTML = "";
+    getProfiles("{% url  'userapp:get-followers' profile_id=profile.id username=profile.user.username loadState=0 %}");
+  });
+
+  document.getElementById("id_following-nav").addEventListener("click", function(event){
+    this.classList.add("active");
+    document.getElementById("id_followers-nav").classList.remove("active");
+    document.getElementById("profile-container").innerHTML = "";
+    getProfiles("{% url  'userapp:get-following' profile_id=profile.id username=profile.user.username loadState=0 %}");
+  });
+
+
+  document.getElementById("profile-pic").addEventListener("click", function(event){
+    event.cancelBubble = true;
+    $("#profile-pic-full-view").modal("show");
+  });
+
+  document.getElementById("cover").addEventListener("click", function(event){
+    event.cancelBubble = true;
+    $("#profile-cover-full-view").modal("show");
+  });
+
+
+</script>
+
+
+
+{% endblock %}

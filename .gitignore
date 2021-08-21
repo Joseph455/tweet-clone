@@ -1,0 +1,4 @@
+/venv/
+/TwitterClone/.env
+db.sqlite3
+.vscode

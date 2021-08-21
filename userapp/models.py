@@ -121,7 +121,7 @@ class Profile(models.Model):
         protocols = ["http://", "https://"]
         
         for p in protocols:
-            if p in Site.objects.get_current():
+            if p in str(Site.objects.get_current()):
                 return f"{Site.objects.get_current()}{url}"
 
         return f"http://{Site.objects.get_current()}{url}"
